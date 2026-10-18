@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d19">
+<title>Unit Circle | Three Phases · Interactive Trigonometry</title>
+<style>
+:root{color-scheme:dark;--bg:#080d19;--panel:#101827;--line:#263248;--muted:#91a1b7;--text:#eaf0f9;--sin:#27cffa;--cos:#ffc639;--tan:#de65ff;--cot:#47d99b;--sec:#fb607f;--csc:#68b7ff;--gold:#ffca39}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 28% -20%,#1c2547 0%,#080d19 57%);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}header{max-width:1570px;margin:auto;padding:28px 30px 18px;display:flex;justify-content:space-between;align-items:center;gap:20px}.kicker{color:#7ba3e7;font-size:11px;font-weight:800;letter-spacing:.21em;text-transform:uppercase;display:block;margin-bottom:9px}h1{font-size:clamp(25px,3vw,38px);margin:0;letter-spacing:-.045em;line-height:1.13}header p{margin:8px 0 0;color:var(--muted);font-size:14px}.head-note{padding:11px 15px;border:1px solid var(--line);border-radius:11px;color:#afc0d9;font-size:12px;white-space:nowrap;background:#10182a}
+.app{max-width:1570px;margin:0 auto;padding:0 30px 28px}.phase-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.phase-tab{border:1px solid #28354b;background:#121d30;color:#a9b9d0;border-radius:13px;padding:15px 14px;text-align:left;display:flex;gap:12px;align-items:center;transition:.18s ease}.phase-tab:hover{background:#1a2a42}.phase-tab[aria-selected="true"]{border-color:#568be4;background:#1a2a45;color:white;box-shadow:inset 0 0 0 1px #568be444}.number{font-size:12px;font-weight:900;letter-spacing:.05em;color:#9eb5d8;border:1px solid #435574;border-radius:8px;width:31px;height:31px;flex:0 0 31px;display:grid;place-items:center}.phase-tab[aria-selected="true"] .number{background:#3866a6;color:white;border-color:#3866a6}.phase-tab b{display:block;font-size:13px}.phase-tab small{color:#9bafca;display:block;font-size:11px;line-height:1.5;margin-top:3px}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 345px;gap:16px;align-items:start}.card{background:linear-gradient(135deg,#101a2b,#0b1423);border:1px solid var(--line);border-radius:18px;min-width:0;overflow:hidden}.plot-head{padding:22px 24px 10px;display:flex;justify-content:space-between;gap:14px;align-items:start}.plot-head .eyebrow{font-size:11px;font-weight:850;letter-spacing:.16em;text-transform:uppercase;color:var(--sin)}.plot-head h2{font-size:22px;line-height:1.23;letter-spacing:-.025em;margin:7px 0 5px}.plot-head p{max-width:650px;color:#9dadc3;font-size:13px;line-height:1.6;margin:0}.plot-badge{font-size:11px;white-space:nowrap;color:#b9cfe6;border:1px solid #30415c;background:#18263a;border-radius:999px;padding:8px 12px}#diagram{display:block;width:100%;height:auto;aspect-ratio:960/680;touch-action:none;user-select:none}.plot-foot{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:13px 23px 17px;color:#899bb4;font-size:12px;border-top:1px solid #1e2a3a;flex-wrap:wrap}.plot-foot b{color:#d6e5fa;font-weight:650}#plot-hint{line-height:1.4}
+.sidebar{display:flex;flex-direction:column;gap:14px}.side-section{padding:20px}.panel-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}.panel-heading h3{font-size:15px;margin:0;letter-spacing:-.012em}.smallcaps{font-size:10px;text-transform:uppercase;letter-spacing:.11em;color:#7e95b5;font-weight:800}.angle-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}.angle-row label{font-size:13px;font-weight:700}.angle-fig{font-size:25px;font-weight:850;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:#fff}.angle-fig small{font-weight:500;font-size:13px;color:#92a7bf;margin-left:5px}input[type=range]{width:100%;height:6px;margin:8px 0 13px;accent-color:#58bafa;cursor:ew-resize}.range-ends{display:flex;justify-content:space-between;color:#7187a3;font-size:11px}.angle-actions{display:flex;gap:7px;margin-top:15px}.mini-btn,.pill{border:1px solid #35465f;border-radius:9px;background:#172338;color:#cbddf3;padding:9px 12px;font-size:12px;font-weight:700}.mini-btn:hover,.pill:hover{background:#263a56}.pill.active{background:#244567;color:#fff;border-color:#67baff}.angle-actions .mini-btn{flex:1}.side-help{font-size:11px;color:#90a5be;margin:13px 0 0;line-height:1.6}.preset-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px}.preset-row button{padding:8px 11px}.switch-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.switch{display:flex;align-items:center;gap:9px;border:1px solid #2a3a51;border-radius:11px;background:#101c2f;padding:12px 9px;cursor:pointer;min-width:0}.switch:has(input:not(:checked)){opacity:.62}.switch input{width:16px;height:16px;margin:0;flex:none;accent-color:var(--switch-color)}.swatch{width:7px;height:24px;background:var(--switch-color);border-radius:9px;flex:none}.switch .names{min-width:0;flex:1}.switch .names b{display:block;font-size:12px}.switch .names small{display:block;color:#8fa6bf;margin-top:4px;font-size:11px;font-variant-numeric:tabular-nums}.group-title{font-size:11px;color:#9cafc8;text-transform:uppercase;font-weight:800;letter-spacing:.13em;margin:19px 0 11px}.group-list{display:flex;flex-direction:column;gap:10px}.identity-card{border:1px solid #2b3b51;border-radius:12px;background:#0e192a;padding:13px;cursor:pointer;display:flex;align-items:start;gap:12px}.identity-card:has(input:not(:checked)){opacity:.55}.identity-card input{accent-color:var(--scale);width:17px;height:17px;margin:3px 0 0;flex:none}.identity-card strong{font-size:13px;display:block;margin-bottom:7px}.identity-card .equation{font:21px Georgia,serif;color:#eff5ff;letter-spacing:-.02em}.identity-card p{font-size:11px;color:#9aacc3;margin:7px 0 0}.identity-card em{font-style:normal;color:var(--scale)}.explainer{background:#0b1523;border:1px solid #25364e;border-radius:13px;padding:14px;margin-top:13px;color:#a6bbd4;font-size:12px;line-height:1.7}.explainer b{color:#dce9fa}.side-equation{font:19px Georgia,serif;line-height:1.85;overflow-wrap:anywhere}.side-equation .accent{font-weight:bold}.sum-terms{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.term{border:1px solid #2d4058;background:#121f32;border-radius:11px;padding:11px}.term span{display:block;color:#94aac5;font-size:10px;margin-bottom:5px}.term strong{display:block;font-size:17px;font-variant-numeric:tabular-nums}.segment-button{border:1px solid #32445b;border-radius:10px;background:#15243a;padding:9px 11px;color:#bad1ec;font-size:12px;font-weight:800}.segment-button.active{background:#234b6d;border-color:#62bbf3;color:white}.segment-buttons{display:flex;gap:7px}.segment-buttons>*{flex:1}.quadrants{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 17px}.quadrant-btn{background:#14243b;border:1px solid #314663;color:#b6cce7;border-radius:9px;padding:10px 2px;font-size:14px;font-weight:850;min-width:0}.quadrant-btn:hover{background:#243b59}.quadrant-btn[aria-pressed="true"]{color:#091627;background:#62c9fc;border-color:#62c9fc;box-shadow:0 0 0 1px #62c9fc44}.quadrant-note{color:#92a8c3;font-size:11px;line-height:1.5;margin:-8px 0 17px}
+.values{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.value-pill{border:1px solid #253248;border-radius:9px;background:#111d2d;padding:9px 7px;text-align:center}.value-pill span{display:block;color:#91a6bf;font-size:11px}.value-pill b{display:block;font-size:15px;margin-top:3px;font-variant-numeric:tabular-nums}.legend{display:flex;flex-wrap:wrap;gap:8px 20px}.legend-item{display:flex;align-items:center;gap:7px;color:#a1b4cd;font-size:11px}.legend-item i{display:inline-block;width:14px;height:4px;border-radius:3px}
+footer{text-align:center;color:#637c9c;font-size:11px;padding:5px 30px 23px;line-height:1.6}.hidden{display:none!important}
+#diagram text{font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}#diagram text.math{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:20px}#diagram text.formula-label{font-size:14px;font-weight:700}#diagram .label-bg{paint-order:stroke;stroke:#0e1726;stroke-width:6px;stroke-linejoin:round}
+@media(max-width:1080px){.workspace{grid-template-columns:minmax(0,1fr) 310px}.plot-head h2{font-size:20px}.phase-tab{padding:12px 9px}.plot-head{padding:16px 17px 8px}}
+@media(max-width:830px){header{padding:23px 17px 13px}.head-note{display:none}.app{padding:0 12px 18px}.workspace{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sidebar>.card:only-child{grid-column:1/-1}.plot-foot{padding:11px 14px}.phase-tab{gap:7px}.phase-tab small{display:none}.values{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:540px){.sidebar{display:flex}.phase-tab b{font-size:11px}.phase-tab .number{height:25px;width:25px;flex-basis:25px;font-size:11px}.phase-tab{gap:6px;padding:10px 7px}.plot-badge{display:none}.plot-head h2{font-size:19px}.plot-head p{font-size:12px}.plot-head{padding:15px 15px 8px}.plot-foot{font-size:11px}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header><div><span class="kicker">Interactive geometry laboratory</span><h1>One circle. Six functions. Three phases.</h1><p>Explore where trigonometric identities come from—not just what to memorize.</p><p>Source Video: <strong><a href="https://www.youtube.com/watch?v=mOBWUJwaJ9k" target="_blank" rel="noopener noreferrer" style="color:#76ccff;text-decoration:underline;text-underline-offset:3px">You Can Rebuild All of Trig From This One Circle</a></strong></p></div><div class="head-note">◉ Offline-ready · SVG geometry · Live calculations</div></header>
+<div class="app">
+<nav class="phase-tabs" aria-label="Visualization phase">
+<button class="phase-tab" id="tab1" aria-selected="true" data-phase="1"><span class="number">01</span><span><b>Physical actions</b><small>Shadow · Touch · Cut</small></span></button>
+<button class="phase-tab" id="tab2" aria-selected="false" data-phase="2"><span class="number">02</span><span><b>Three scales</b><small>Pythagorean identities</small></span></button>
+<button class="phase-tab" id="tab3" aria-selected="false" data-phase="3"><span class="number">03</span><span><b>Interaction & payoff</b><small>Angle-addition formulas</small></span></button>
+</nav>
+<div class="workspace">
+<section class="card plot-card">
+<div class="plot-head"><div><span class="eyebrow" id="phase-kicker">Phase 01 · Shadow / Touch / Cut</span><h2 id="phase-title">The six trigonometric functions</h2><p id="phase-desc">Toggle any combination of the six constructions. Drag the white point on the circle or change θ to see the geometry update.</p></div><span class="plot-badge" id="view-badge">FIRST QUADRANT</span></div>
+<svg id="diagram" viewBox="0 0 960 680" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive trigonometry geometric diagram"></svg>
+<div class="plot-foot"><span id="plot-hint">↔ Drag the point on the circle to change θ</span><span id="plot-status"><b>θ = 38°</b> · Radius = 1</span></div>
+</section>
+<div class="sidebar">
+<section class="card side-section" id="theta-panel"><div class="panel-heading"><h3>Angle control</h3><span class="smallcaps">Live</span></div>
+<div class="group-title" style="margin-top:0">Select quadrant</div><div class="quadrants" role="group" aria-label="Select unit-circle quadrant"><button class="quadrant-btn" type="button" data-quadrant="1" aria-pressed="true">I</button><button class="quadrant-btn" type="button" data-quadrant="2" aria-pressed="false">II</button><button class="quadrant-btn" type="button" data-quadrant="3" aria-pressed="false">III</button><button class="quadrant-btn" type="button" data-quadrant="4" aria-pressed="false">IV</button></div><p class="quadrant-note" id="quadrant-note">Reference angle: 38° · All six values positive</p><div class="angle-row"><label for="theta">Rotation angle <span style="color:var(--gold)">θ</span></label><span class="angle-fig"><span id="angle-val">38°</span><small id="angle-rad">0.663 rad</small></span></div>
+<input id="theta" type="range" min="8" max="82" step="1" value="38" aria-label="Theta angle in degrees"><div class="range-ends"><span id="range-min">8°</span><span id="range-mid">45°</span><span id="range-max">82°</span></div>
+<div class="angle-actions"><button class="mini-btn" id="minus-theta" aria-label="Decrease angle one degree">− 1°</button><button class="mini-btn" id="reset-theta" title="Reset to a 38° reference angle">Reset ref 38°</button><button class="mini-btn" id="plus-theta" aria-label="Increase angle one degree">+ 1°</button></div>
+<p class="side-help">Choose a quadrant, move the slider, or drag the point around the circle. Colored tangent and secant segments represent <b>magnitudes</b>; the numerical readouts show the signed function values. Angles stay at least 8° from the axes to avoid undefined or extremely large ratios.</p></section>
+<section class="card side-section" id="functions-panel"><div class="panel-heading"><h3>Function visibility</h3><span class="smallcaps">Any combination</span></div>
+<div class="preset-row"><button class="pill" data-preset="shadow">Shadow</button><button class="pill" data-preset="touch">Touch</button><button class="pill" data-preset="cut">Cut</button><button class="pill" data-preset="all">All six</button><button class="pill" data-preset="none">None</button></div>
+<div class="switch-list">
+<label class="switch" style="--switch-color:var(--sin)"><input type="checkbox" data-func="sin" checked><span class="swatch"></span><span class="names"><b>Sine</b><small id="value-sin">sin θ = .616</small></span></label>
+<label class="switch" style="--switch-color:var(--cos)"><input type="checkbox" data-func="cos" checked><span class="swatch"></span><span class="names"><b>Cosine</b><small id="value-cos">cos θ = .788</small></span></label>
+<label class="switch" style="--switch-color:var(--tan)"><input type="checkbox" data-func="tan"><span class="swatch"></span><span class="names"><b>Tangent</b><small id="value-tan">tan θ = .781</small></span></label>
+<label class="switch" style="--switch-color:var(--cot)"><input type="checkbox" data-func="cot"><span class="swatch"></span><span class="names"><b>Cotangent</b><small id="value-cot">cot θ = 1.280</small></span></label>
+<label class="switch" style="--switch-color:var(--sec)"><input type="checkbox" data-func="sec"><span class="swatch"></span><span class="names"><b>Secant</b><small id="value-sec">sec θ = 1.269</small></span></label>
+<label class="switch" style="--switch-color:var(--csc)"><input type="checkbox" data-func="csc"><span class="swatch"></span><span class="names"><b>Cosecant</b><small id="value-csc">csc θ = 1.624</small></span></label>
+</div>
+<div class="explainer" id="actions-caption"><b>Three physical actions × two axes = six functions.</b> “Shadow” uses coordinate projections, “Touch” measures along the tangent lines x = ±1 or y = ±1, and “Cut” measures the radial segments to those lines. Outside quadrant I, construction lines move to the tangent on the matching side of the circle, with signed values displayed above.</div>
+</section>
+<section class="card side-section hidden" id="scales-panel"><div class="panel-heading"><h3>Three right triangles</h3><span class="smallcaps">Toggle individually</span></div>
+<div class="group-list">
+<label class="identity-card" style="--scale:var(--sin)"><input type="checkbox" data-scale="unit" checked><div><strong><em>Scale 1</em> · Inside the unit circle</strong><div class="equation">sin² θ + cos² θ = 1</div><p>Legs sin θ and cos θ · hypotenuse 1</p></div></label>
+<label class="identity-card" style="--scale:var(--tan)"><input type="checkbox" data-scale="vertical" checked><div><strong><em>Scale 2</em> · At the vertical tangent</strong><div class="equation">1 + tan² θ = sec² θ</div><p>Legs 1 and tan θ · hypotenuse sec θ</p></div></label>
+<label class="identity-card" style="--scale:var(--cot)"><input type="checkbox" data-scale="top" checked><div><strong><em>Scale 3</em> · At the top tangent</strong><div class="equation">1 + cot² θ = csc² θ</div><p>Legs 1 and cot θ · hypotenuse csc θ</p></div></label>
+</div><div class="angle-actions"><button class="mini-btn" id="scales-all">Show all three</button><button class="mini-btn" id="scales-none">Hide triangles</button></div>
+<div class="explainer"><b>Same theorem, three scales:</b> a² + b² = c². The lengths are nonnegative magnitudes, so the identities remain valid in all four quadrants because every leg is squared.</div></section>
+<section class="card side-section hidden" id="sum-panel"><div class="panel-heading"><h3>Combine two angles</h3><span class="smallcaps">A + B ≤ 85°</span></div>
+<div class="angle-row"><label for="angle-a" style="color:var(--sin)">Angle A</label><span class="angle-fig" id="a-val">32°</span></div><input type="range" id="angle-a" min="5" max="75" step="1" value="32" aria-label="Angle A"><div class="range-ends"><span>5°</span><span>Change A</span><span>75°</span></div>
+<div class="angle-row" style="margin-top:21px"><label for="angle-b" style="color:var(--tan)">Angle B</label><span class="angle-fig" id="b-val">24°</span></div><input type="range" id="angle-b" min="5" max="75" step="1" value="24" aria-label="Angle B"><div class="range-ends"><span>5°</span><span id="sum-angle-display">Sum = 56°</span><span>75°</span></div>
+<div class="group-title">Show component projections</div><div class="segment-buttons"><button class="segment-button active" id="show-both" data-sum-view="both">Both</button><button class="segment-button" id="show-height" data-sum-view="height">Sine / height</button><button class="segment-button" id="show-width" data-sum-view="width">Cosine / width</button></div>
+<div class="explainer"><b>Rotate a length of cos B by A.</b> Its horizontal and vertical projections are cos A cos B and sin A cos B. The perpendicular piece of length sin B contributes +cos A sin B vertically, but −sin A sin B horizontally.</div></section>
+<section class="card side-section hidden" id="sum-equations"><div class="panel-heading"><h3>The angle-addition payoff</h3><span class="smallcaps">Computed live</span></div>
+<div class="group-title" style="margin-top:0">Total vertical height</div><div class="side-equation">sin(A + B) = <span style="color:var(--sin)">sin A cos B</span> <span style="color:#e0e9f5">+</span> <span style="color:var(--tan)">cos A sin B</span></div>
+<div class="sum-terms"><div class="term"><span>sin A cos B</span><strong id="sin-term1" style="color:var(--sin)">0.484</strong></div><div class="term"><span>cos A sin B</span><strong id="sin-term2" style="color:var(--tan)">0.345</strong></div></div>
+<div class="group-title">Total horizontal width</div><div class="side-equation">cos(A + B) = <span style="color:var(--cos)">cos A cos B</span> <span style="color:var(--sec)">− sin A sin B</span></div>
+<div class="sum-terms"><div class="term"><span>cos A cos B</span><strong id="cos-term1" style="color:var(--cos)">0.775</strong></div><div class="term"><span>sin A sin B (subtract)</span><strong id="cos-term2" style="color:var(--sec)">0.216</strong></div></div>
+<div class="explainer">The <b>minus sign</b> comes from the red horizontal component pointing <b>backwards</b> (left) while the blue rotated component points forward (right).</div>
+</section>
+</div></div>
+<div class="card" style="padding:15px 20px;margin-top:14px"><div class="legend"><span class="legend-item"><i style="background:var(--sin)"></i>Sine / vertical</span><span class="legend-item"><i style="background:var(--cos)"></i>Cosine / horizontal</span><span class="legend-item"><i style="background:var(--tan)"></i>Tangent</span><span class="legend-item"><i style="background:var(--cot)"></i>Cotangent</span><span class="legend-item"><i style="background:var(--sec)"></i>Secant</span><span class="legend-item"><i style="background:var(--csc)"></i>Cosecant</span></div></div>
+</div>
+<footer>Interactive unit-circle explainer based on the supplied reference diagrams. No libraries, internet connection, or installation required. Drag the unit-circle point or use the controls.<div style="margin-top:8px">Copyright 2026, Chris Athanas · <a href="https://github.com/realityexpander/Trigonometry-visualization-to-Rebuild-All-of-Trig-from-One-Circle" target="_blank" rel="noopener noreferrer" style="color:#76ccff;text-decoration:underline;text-underline-offset:3px">GitHub Source</a></div></footer>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id), svg=$('diagram');
+const pi=Math.PI, rd=x=>x*pi/180, clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),fmt=x=>Math.abs(x)<.0005?'0.000':x.toFixed(3);
+const C={sin:'#27cffa',cos:'#ffc639',tan:'#de65ff',cot:'#47d99b',sec:'#fb607f',csc:'#68b7ff',white:'#e7f0ff',muted:'#8493ab'};
+let phase=1,theta=38,quadrant=1,A=32,B=24,sumView='both';
+const flags={sin:true,cos:true,tan:false,cot:false,sec:false,csc:false};
+const scales={unit:true,vertical:true,top:true};
+const NS='http://www.w3.org/2000/svg';
+const quadrantBounds={1:[8,82],2:[98,172],3:[188,262],4:[278,352]};
+const quadrantOf=angle=>angle<90?1:angle<180?2:angle<270?3:4;
+const referenceAngle=angle=>{const rem=angle%180;return rem<=90?rem:180-rem};
+const angleForQuadrant=(q,ref)=>[0,ref,180-ref,180+ref,360-ref][q];
+const signName={1:'All six values positive',2:'sin, csc positive · cos, sec, tan, cot negative',3:'tan, cot positive · sin, cos, sec, csc negative',4:'cos, sec positive · sin, csc, tan, cot negative'};
+function chooseQuadrant(q){const reference=clamp(referenceAngle(theta),8,82);quadrant=q;theta=angleForQuadrant(q,reference);sync()}
+
+const ln=(a,b,color='#5a6881',width=2,extra='')=>`<line x1="${a[0].toFixed(2)}" y1="${a[1].toFixed(2)}" x2="${b[0].toFixed(2)}" y2="${b[1].toFixed(2)}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" ${extra}/>`;
+const cir=(p,r,fill,stroke='none',sw=1,extra='')=>`<circle cx="${p[0].toFixed(2)}" cy="${p[1].toFixed(2)}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" ${extra}/>`;
+const poly=(pts,fill,stroke='none',width=2,extra='')=>`<polygon points="${pts.map(p=>p.map(v=>v.toFixed(2)).join(',')).join(' ')}" fill="${fill}" stroke="${stroke}" stroke-width="${width}" stroke-linejoin="round" ${extra}/>`;
+const txt=(p,s,color='#eaf1fb',size=19,extra='')=>`<text x="${p[0].toFixed(2)}" y="${p[1].toFixed(2)}" fill="${color}" font-size="${size}" class="label-bg" ${extra}>${s}</text>`;
+const xy=(r,a)=>[r*Math.cos(a),r*Math.sin(a)];
+const mkViewport=(t)=>{
+  // The tangent intersections are on x = ±1 and y = ±1 in the selected quadrant.
+  const c=Math.cos(t),si=Math.sin(t),qX=Math.sign(c),qY=Math.sign(si);
+  const tangent=qX*Math.tan(t),cotangent=qY/Math.tan(t);
+  const minX=Math.min(-1.31,qX-.27,cotangent-.28),maxX=Math.max(1.31,qX+.27,cotangent+.28);
+  const minY=Math.min(-1.30,qY-.27,tangent-.29),maxY=Math.max(1.30,qY+.27,tangent+.29);
+  const area={x:38,y:26,w:880,h:589}, sx=area.w/(maxX-minX),sy=area.h/(maxY-minY),s=Math.min(226,sx,sy);
+  const ox=area.x+(area.w-(maxX-minX)*s)/2-minX*s;
+  const oy=area.y+(area.h-(maxY-minY)*s)/2+maxY*s;
+  return {p:(x,y)=>[ox+s*x,oy-s*y],s,ox,oy,minX,maxX,minY,maxY};
+};
+let interactiveViewport=null;
+function arc(center,r,a1,a2,col='#ffce38',w=3){const p1=[center[0]+r*Math.cos(a1),center[1]-r*Math.sin(a1)],p2=[center[0]+r*Math.cos(a2),center[1]-r*Math.sin(a2)],large=Math.abs(a2-a1)>pi?1:0;return `<path d="M${p1.join(' ')} A${r} ${r} 0 ${large} 0 ${p2.join(' ')}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/>`}
+function drawCircle(){
+  const t=rd(theta),c=Math.cos(t),si=Math.sin(t),ta=Math.tan(t),co=1/ta;
+  const qX=Math.sign(c),qY=Math.sign(si);
+  const vp=mkViewport(t),{p,s,ox,oy}=vp;
+  interactiveViewport={ox,oy,s};
+  const O=p(0,0),P=p(c,si),H=p(c,0),R=p(qX,0),T=p(qX,qX*ta),Top=p(0,qY),U=p(qY*co,qY);
+  const isFirst=quadrant===1;
+  const metric=f=>isFirst?`${f} θ`:`|${f} θ|`;
+  const vx=Math.sin(t),vy=Math.cos(t);
+  let h='';
+  h+=`<defs><filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="4" /></filter></defs>`;
+  const start=(quadrant-1)*pi/2,end=start+pi/2;
+  const arcStart=[ox+s*Math.cos(start),oy-s*Math.sin(start)],arcEnd=[ox+s*Math.cos(end),oy-s*Math.sin(end)];
+  h+=`<path d="M${O.join(' ')} L${arcStart.join(' ')} A${s} ${s} 0 0 0 ${arcEnd.join(' ')} Z" fill="#4478c3" opacity=".115"/>`;
+  h+=cir(O,s,'none','#637289',1.9,'opacity=".73"');
+  h+=ln(p(vp.minX,0),p(vp.maxX,0),'#34445a',1.6);
+  h+=ln(p(0,vp.minY),p(0,vp.maxY),'#34445a',1.6);
+  for(const [x,y,label] of [[1,1,'I'],[-1,1,'II'],[-1,-1,'III'],[1,-1,'IV']]){
+    const pt=p(x*.88,y*.88);
+    h+=txt(pt,label,(x*qX>0&&y*qY>0)?'#7cbcf5':'#53657e',15,'text-anchor="middle" opacity=".78"');
+  }
+  for(const [x,y,label,dx,dy] of [[1,0,'1',8,23],[-1,0,'−1',-9,23],[0,1,'1',-12,-9],[0,-1,'−1',-12,21]]){
+    const pt=p(x,y);h+=txt([pt[0]+dx,pt[1]+dy],label,'#8192ab',12,x<0||x===0?'text-anchor="end"':'');
+  }
+  const cotOffset=qY>0?-15:30;
+  const tanPos=[R[0]+qX*14,(R[1]+T[1])/2+6];
+  const secPos=[(O[0]+T[0])/2-vx*23,(O[1]+T[1])/2-vy*23];
+  const cscPos=[(O[0]+U[0])/2+vx*22,(O[1]+U[1])/2+vy*22];
+  if(phase===1){
+    if(flags.sec||flags.tan)h+=ln(p(qX,-qY*.16),p(qX,qX*ta+qY*.16),'#526176',1.3,'stroke-dasharray="6 7" opacity=".65"');
+    if(flags.csc||flags.cot)h+=ln(p(-qX*.16,qY),p(qY*co+qX*.16,qY),'#526176',1.3,'stroke-dasharray="6 7" opacity=".65"');
+    if(flags.sin&&flags.cos)h+=poly([O,H,P],C.sin+'10');
+    if(flags.cos){h+=ln(O,H,C.cos,5);h+=txt([(O[0]+H[0])/2,H[1]+(qY>0?31:-17)],'cos θ',C.cos,20,'text-anchor="middle" class="math"')}
+    if(flags.sin){h+=ln(H,P,C.sin,5);h+=txt([P[0]+qX*14,(H[1]+P[1])/2+6],'sin θ',C.sin,20,`${qX<0?'text-anchor="end" ':''}class="math"`)}
+    if(flags.sec){h+=ln(O,T,C.sec,6);h+=txt(secPos,metric('sec'),C.sec,19,`${qX<0?'text-anchor="end" ':''}class="math"`)}
+    if(flags.csc){h+=ln(O,U,C.csc,flags.sec?3.7:5,flags.sec?'stroke-dasharray="11 7"':'');h+=txt(cscPos,metric('csc'),C.csc,19,`${qX<0?'text-anchor="end" ':''}class="math"`)}
+    if(flags.tan){h+=ln(R,T,C.tan,5);h+=txt(tanPos,metric('tan'),C.tan,20,`${qX<0?'text-anchor="end" ':''}class="math"`)}
+    if(flags.cot){h+=ln(Top,U,C.cot,5);h+=txt([(Top[0]+U[0])/2,Top[1]+cotOffset],metric('cot'),C.cot,20,'text-anchor="middle" class="math"')}
+    if(flags.sec||flags.tan)h+=cir(R,5,flags.tan?C.tan:C.sec);
+    if(flags.csc||flags.cot)h+=cir(Top,5,C.cot);
+    if(flags.sec)h+=cir(T,5,C.sec);
+    if(flags.csc)h+=cir(U,5,C.csc);
+  }else{
+    // Three signed-coordinate triangles, whose side lengths are nonnegative magnitudes.
+    if(scales.unit){
+      h+=poly([O,H,P],C.sin+'22',C.sin,2.6);h+=ln(O,H,C.cos,4);h+=ln(H,P,C.sin,4);h+=ln(O,P,'#ecf5ff',3);
+      h+=txt([(O[0]+H[0])/2,H[1]+(qY>0?31:-17)],metric('cos'),C.cos,19,'text-anchor="middle" class="math"');
+      h+=txt([P[0]+qX*15,(P[1]+H[1])/2],metric('sin'),C.sin,18,`${qX<0?'text-anchor="end" ':''}class="math"`);
+      h+=txt([O[0]+(P[0]-O[0])*.32-qX*11,O[1]+(P[1]-O[1])*.32-qY*13],'1','#f3f7ff',20,'class="math"');
+    }
+    if(scales.vertical){
+      h+=poly([O,R,T],C.tan+'12',C.tan,2.5);h+=ln(O,R,C.cos,3);h+=ln(R,T,C.tan,5);h+=ln(O,T,C.sec,3.8);
+      h+=txt(tanPos,metric('tan'),C.tan,19,`${qX<0?'text-anchor="end" ':''}class="math"`);
+      h+=txt([(O[0]+R[0])/2,R[1]+(qY>0?50:-34)],'1','#f4f7ff',20,'text-anchor="middle"');
+      h+=txt(secPos,metric('sec'),C.sec,19,`${qX<0?'text-anchor="end" ':''}class="math"`);
+      h+=cir(R,5,C.tan);h+=cir(T,5,C.sec);
+    }
+    if(scales.top){
+      h+=poly([O,Top,U],C.cot+'15',C.cot,2.5);h+=ln(O,Top,C.cot,3);h+=ln(Top,U,C.cot,5);h+=ln(O,U,C.csc,3.8);
+      h+=txt([(Top[0]+U[0])/2,Top[1]+cotOffset],metric('cot'),C.cot,19,'text-anchor="middle" class="math"');
+      h+=txt(cscPos,metric('csc'),C.csc,18,`${qX<0?'text-anchor="end" ':''}class="math"`);
+      h+=txt([Top[0]-qX*18,(O[1]+Top[1])/2+7],'1','#f3f7ff',20,`${qX>0?'text-anchor="end" ':''}`);
+      h+=cir(Top,5,C.cot);h+=cir(U,5,C.csc);
+    }
+  }
+  if(phase===1){h+=ln(O,P,'#f1f5ff',2.9);h+=cir(P,7,'#fff','#6a7c96',2)}else{h+=cir(P,6,'#fff','#6a7c96',2)}
+  const rr=Math.min(45,s*.34);
+  h+=arc(O,rr,0,t,C.cos,2.7);
+  // For reflex angles, move θ away from the circle's crossing points.
+  const angleLabel=quadrant===1?t/2:quadrant===2?(pi/2+t)/2:quadrant===3?(pi+t)/2:(3*pi/2+t)/2;
+  const labelR=Math.min(72,s*.44);
+  h+=txt([O[0]+labelR*Math.cos(angleLabel),O[1]-labelR*Math.sin(angleLabel)-4],'θ',C.cos,19,'class="math"');
+  h+=cir(O,5,'#fff');
+  h+=cir(P,22,'transparent','transparent',1,'id="drag-handle" style="cursor:grab;touch-action:none"');
+  h+=txt([P[0]+qX*12,P[1]-qY*15],`(${fmt(c)}, ${fmt(si)})`,'#b8c5d8',13,`${qX<0?'text-anchor="end" ':''}id="point-coordinate"`);
+  h+=txt([23,655],`unit radius = 1  ·  θ = ${theta}°  ·  Quadrant ${['','I','II','III','IV'][quadrant]}`,'#8597b2',14);
+  svg.innerHTML=h;
+}
+function drawSum(){
+ const a=rd(A),b=rd(B),s=a+b,R=410,O=[205,515],pw=(x,y)=>[O[0]+R*x,O[1]-R*y];
+ const P=pw(Math.cos(a)*Math.cos(b),Math.sin(a)*Math.cos(b)),V=pw(Math.cos(s),Math.sin(s)),U=pw(Math.cos(a),Math.sin(a));
+ const Q=[P[0],O[1]],F=[V[0],O[1]], rightX=740, widthY=580;const showH=sumView!=='width',showW=sumView!=='height';
+ let h='';
+ // First-quadrant guide, two rays, and their construction.
+ h+=ln([56,O[1]],[822,O[1]],'#35465d',2);
+ h+=ln(O,pw(1.12*Math.cos(a),1.12*Math.sin(a)),'#648ba3',1.6,'stroke-dasharray="5 9"');
+ h+=ln(O,pw(1.09*Math.cos(s),1.09*Math.sin(s)),'#8291b0',1.5,'stroke-dasharray="5 9"');
+ h+=poly([O,P,V],'#de65ff12',C.tan,2);
+ h+=ln(O,P,C.sin,5);
+ h+=ln(P,V,C.tan,5);
+ h+=ln(O,V,'#f3f4ff',3.5);
+ h+=ln(O,U,'#5d758f',1.3,'stroke-dasharray="6 7"');
+ // Right-angle marker at P (OP is perpendicular to PV).
+ const e=13, ux=Math.cos(a),uy=-Math.sin(a),vx=-Math.sin(a),vy=-Math.cos(a);
+ const p1=[P[0]-ux*e,P[1]-uy*e],p2=[p1[0]+vx*e,p1[1]+vy*e],p3=[P[0]+vx*e,P[1]+vy*e];
+ h+=`<path d="M${p1.join(' ')} L${p2.join(' ')} L${p3.join(' ')}" fill="none" stroke="#cfddf0" stroke-width="1.6"/>`;
+ // vertical contribution of OP at its actual x and of PV on the right.
+ if(showH){
+   h+=poly([O,Q,P],C.sin+'1c','none');
+   h+=ln(Q,P,C.sin,5);
+   h+=ln([rightX,O[1]],[rightX,P[1]],C.sin,6);
+   h+=ln([rightX,P[1]],[rightX,V[1]],C.tan,6);
+   h+=ln(P,[rightX,P[1]],'#425776',1.2,'stroke-dasharray="5 6"');
+   h+=ln(V,[rightX,V[1]],'#425776',1.2,'stroke-dasharray="5 6"');
+   h+=txt([rightX+13,(O[1]+P[1])/2+5],'sin A cos B',C.sin,19,'class="math"');
+   h+=txt([rightX+13,(P[1]+V[1])/2+5],'cos A sin B',C.tan,19,'class="math"');
+ }
+ if(showW){
+   h+=ln([O[0],widthY],[P[0],widthY],C.cos,5);
+   // subtraction arrow points from P projection back to V projection.
+   const ay=widthY+34;
+   h+=ln([P[0],ay],[V[0],ay],C.sec,4);
+   h+=poly([[V[0],ay],[V[0]+12,ay-7],[V[0]+12,ay+7]],C.sec);
+   h+=ln(P,[P[0],widthY-10],'#334a61',1.3,'stroke-dasharray="5 7"');
+   h+=ln(V,[V[0],widthY+9],'#334a61',1.3,'stroke-dasharray="5 7"');
+   h+=txt([(O[0]+P[0])/2,widthY-11],'cos A cos B',C.cos,19,'text-anchor="middle" class="math"');
+   h+=txt([(V[0]+P[0])/2,ay+28],'−sin A sin B',C.sec,19,'text-anchor="middle" class="math"');
+ }
+ // arcs for A, B, A+B.
+ h+=arc(O,68,0,a,C.sin,3.5);
+ h+=arc(O,93,a,s,C.tan,3.5);
+ h+=arc(O,118,0,s,'#f3f7ff',1.8);
+ h+=txt([O[0]+85*Math.cos(a/2),O[1]-85*Math.sin(a/2)+1],'A',C.sin,20,'class="math"');
+ h+=txt([O[0]+113*Math.cos(a+b/2),O[1]-113*Math.sin(a+b/2)],'B',C.tan,20,'class="math"');
+ h+=txt([O[0]+155*Math.cos(s+.21),O[1]-155*Math.sin(s+.21)],'A + B','#f6f9ff',17,'class="math"');
+ h+=txt([(O[0]+P[0])/2-8,(O[1]+P[1])/2+25],'cos B',C.sin,21,'class="math"');
+ h+=txt([(P[0]+V[0])/2+13,(P[1]+V[1])/2],'sin B',C.tan,21,'class="math"');
+ h+=txt([O[0]-13,(O[1]+V[1])/2-28],'Hypotenuse = 1','#f5f8ff',17,'text-anchor="end"');
+ h+=cir(O,5,'white');h+=cir(P,5,C.sin);h+=cir(V,7,'white','#6a7c96',2);
+ h+=txt([17,38],`${A}° + ${B}° = ${A+B}°`,'#a7bedb',17);
+ 
+ svg.innerHTML=h;
+}
+function sync(){
+ document.querySelectorAll('.phase-tab').forEach(el=>el.setAttribute('aria-selected',String(Number(el.dataset.phase)===phase)));
+ $('theta-panel').classList.toggle('hidden',phase===3);
+ $('functions-panel').classList.toggle('hidden',phase!==1);
+ $('scales-panel').classList.toggle('hidden',phase!==2);
+ $('sum-panel').classList.toggle('hidden',phase!==3);
+ $('sum-equations').classList.toggle('hidden',phase!==3);
+ const meta={1:['Phase 01 · Shadow / Touch / Cut','The six trigonometric functions','Each colored segment is a coordinate projection, a tangent-line length, or a radial intersection. Toggle any number of functions and drag the radius.','QUADRANT '+['','I','II','III','IV'][quadrant]],2:['Phase 02 · The three scales of Pythagoras','One theorem. One ray. Three scales.','The triangles follow the same ray. Outside quadrant I, their acute angle is the reference angle of θ. Each identity remains valid because its lengths are squared.','PYTHAGOREAN IDENTITIES'],3:['Phase 03 · The interaction & the payoff','Why the sum formulas have a + and a −','Two angles, one rotated triangle: the vertical components add, while the horizontal contribution of sin B steps backwards.','ANGLE ADDITION']};
+ const d=meta[phase]; $('phase-kicker').textContent=d[0];$('phase-title').textContent=d[1];$('phase-desc').textContent=d[2];$('view-badge').textContent=d[3];
+ $('plot-hint').textContent=phase===3?'Move A and B independently; switch between the height and width constructions.':'↔ Drag the white point through any quadrant, or select I–IV at right';
+ if(phase===3){$('plot-status').innerHTML=`<b>A = ${A}°</b> · <b>B = ${B}°</b> · A+B = ${A+B}°`;}else{$('plot-status').innerHTML=`<b>θ = ${theta}°</b> · Radius = 1`}
+ quadrant=quadrantOf(theta);
+ const [low,high]=quadrantBounds[quadrant];
+ $('theta').min=low;$('theta').max=high;$('theta').value=theta;
+ $('range-min').textContent=low+'°';$('range-mid').textContent=(low+high)/2+'°';$('range-max').textContent=high+'°';
+ $('angle-val').textContent=theta+'°';$('angle-rad').textContent=fmt(rd(theta))+' rad';
+ $('quadrant-note').textContent='Reference angle: '+referenceAngle(theta)+'° · '+signName[quadrant];
+ document.querySelectorAll('[data-quadrant]').forEach(el=>el.setAttribute('aria-pressed',String(+el.dataset.quadrant===quadrant)));
+ const t=rd(theta),v={sin:Math.sin(t),cos:Math.cos(t),tan:Math.tan(t),cot:1/Math.tan(t),sec:1/Math.cos(t),csc:1/Math.sin(t)};
+ for(let f of Object.keys(flags)){$('value-'+f).textContent=f+' θ = '+fmt(v[f]);}
+ document.querySelectorAll('[data-func]').forEach(el=>el.checked=flags[el.dataset.func]);
+ document.querySelectorAll('[data-scale]').forEach(el=>el.checked=scales[el.dataset.scale]);
+ $('angle-a').value=A;$('angle-b').value=B;$('a-val').textContent=A+'°';$('b-val').textContent=B+'°';$('sum-angle-display').textContent='Sum = '+(A+B)+'°';
+ document.querySelectorAll('[data-sum-view]').forEach(el=>el.classList.toggle('active',el.dataset.sumView===sumView));
+ const a=rd(A),b=rd(B);$('sin-term1').textContent=fmt(Math.sin(a)*Math.cos(b));$('sin-term2').textContent=fmt(Math.cos(a)*Math.sin(b));$('cos-term1').textContent=fmt(Math.cos(a)*Math.cos(b));$('cos-term2').textContent=fmt(Math.sin(a)*Math.sin(b));
+ if(phase===3)drawSum();else drawCircle();
+}
+function setPhase(p){phase=p;sync()}
+document.querySelectorAll('.phase-tab').forEach(el=>el.addEventListener('click',()=>setPhase(Number(el.dataset.phase))));
+$('theta').addEventListener('input',e=>{theta=Number(e.target.value);sync()});
+$('minus-theta').addEventListener('click',()=>{theta=clamp(theta-1,...quadrantBounds[quadrant]);sync()});
+$('plus-theta').addEventListener('click',()=>{theta=clamp(theta+1,...quadrantBounds[quadrant]);sync()});
+$('reset-theta').addEventListener('click',()=>{theta=angleForQuadrant(quadrant,38);sync()});
+document.querySelectorAll('[data-quadrant]').forEach(el=>el.addEventListener('click',()=>chooseQuadrant(+el.dataset.quadrant)));
+document.querySelectorAll('[data-func]').forEach(el=>el.addEventListener('change',()=>{flags[el.dataset.func]=el.checked;sync()}));
+document.querySelectorAll('[data-scale]').forEach(el=>el.addEventListener('change',()=>{scales[el.dataset.scale]=el.checked;sync()}));
+document.querySelectorAll('[data-preset]').forEach(el=>el.addEventListener('click',()=>{const f=el.dataset.preset;const mapping={shadow:['sin','cos'],touch:['tan','cot'],cut:['sec','csc'],all:Object.keys(flags),none:[]};for(let k of Object.keys(flags))flags[k]=mapping[f].includes(k);sync()}));
+$('scales-all').addEventListener('click',()=>{Object.keys(scales).forEach(k=>scales[k]=true);sync()});
+$('scales-none').addEventListener('click',()=>{Object.keys(scales).forEach(k=>scales[k]=false);sync()});
+$('angle-a').addEventListener('input',e=>{A=Number(e.target.value);B=Math.min(B,85-A);sync()});
+$('angle-b').addEventListener('input',e=>{B=Math.min(Number(e.target.value),85-A);sync()});
+document.querySelectorAll('[data-sum-view]').forEach(el=>el.addEventListener('click',()=>{sumView=el.dataset.sumView;sync()}));
+// Mouse, stylus, and touch: svg-space pointer angle read using its current CTM.
+let dragging=false;
+const thetaFromPointer=ev=>{
+ if(phase===3||!interactiveViewport)return;
+ const matrix=svg.getScreenCTM();if(!matrix)return;
+ const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;
+ const k=p.matrixTransform(matrix.inverse());
+ const x=(k.x-interactiveViewport.ox)/interactiveViewport.s,y=(interactiveViewport.oy-k.y)/interactiveViewport.s;
+ if(x*x+y*y<.045)return;
+ const raw=(Math.atan2(y,x)*180/pi+360)%360;
+ const q=quadrantOf(raw);
+ quadrant=q;theta=clamp(Math.round(raw),...quadrantBounds[q]);sync();
+};
+svg.addEventListener('pointerdown',e=>{
+ if(phase===3)return;
+ // Only begin dragging near the circle's draggable endpoint, not any arbitrary SVG click.
+ const h=$('drag-handle');if(!h)return;
+ const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;
+ const k=pt.matrixTransform(svg.getScreenCTM().inverse());
+ const dx=k.x-Number(h.getAttribute('cx')),dy=k.y-Number(h.getAttribute('cy'));
+ if(dx*dx+dy*dy>44*44)return;
+ dragging=true;svg.setPointerCapture(e.pointerId);thetaFromPointer(e);
+});
+svg.addEventListener('pointermove',e=>{if(dragging)thetaFromPointer(e)});
+svg.addEventListener('pointerup',()=>dragging=false);
+svg.addEventListener('pointercancel',()=>dragging=false);
+sync();
+})();
+</script>
+</body></html>
