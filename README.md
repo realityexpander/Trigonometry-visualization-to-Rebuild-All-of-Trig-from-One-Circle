@@ -21,6 +21,7 @@
 - **Three optional Pythagorean triangles**, each independently visible in Phase 2.
 - **Independent A and B angle controls** and height/width component views in Phase 3.
 - **Runs offline:** a single HTML file with embedded CSS and JavaScript; no installation, frameworks, or external runtime dependencies.
+- Chat that generated the app: https://chatgpt.com/share/6ad4e634-3574-83e9-837e-84b14572a3ba
 
 ## Getting started
 
