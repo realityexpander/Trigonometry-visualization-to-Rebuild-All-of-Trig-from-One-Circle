@@ -2,6 +2,9 @@
 
 **An interactive visualization of trigonometry built from the unit circle.** Explore all six trigonometric functions, their geometric relationships, the three Pythagorean identities, and the sine/cosine angle-addition formulas.
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d8b8acfb-cc5a-4a24-a58f-d7b6b6e7fa33" />
+
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Source video:** [You Can Rebuild All of Trig From This One Circle](https://www.youtube.com/watch?v=mOBWUJwaJ9k)  
